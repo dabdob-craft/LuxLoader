@@ -1,8 +1,9 @@
 pluginManagement {
     repositories {
         maven("https://maven.fabricmc.net/")
-        mavenCentral()
+        maven("https://maven.architectury.dev/")
         gradlePluginPortal()
+        mavenCentral()
     }
 }
 

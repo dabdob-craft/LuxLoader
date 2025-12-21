@@ -23,3 +23,7 @@ dependencies {
 tasks.withType<JavaCompile> {
     options.release.set(17)
 }
+
+loom {
+    accessWidenerPath.set(file("src/main/resources/lux.accesswidener"))
+}

@@ -30,3 +30,17 @@ tasks.withType<JavaCompile> {
 loom {
     accessWidenerPath.set(file("src/main/resources/lux.accesswidener"))
 }
+
+tasks.jar {
+    manifest {
+        attributes(
+            "Main-Class" to "net.lux.core.LuxCore",
+            "Implementation-Title" to "LuxLoader",
+            "Implementation-Version" to project.version,
+            "Implementation-Vendor" to "dabdob-craft",
+            "Prerelease" to "true",
+            "Multi-Release" to true,
+            "Build-Jdk-Spec" to "17" 
+        )
+    }
+}

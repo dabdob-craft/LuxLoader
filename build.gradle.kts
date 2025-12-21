@@ -1,6 +1,6 @@
 plugins {
     java
-    id("dev.architectury.loom") version "1.3.383" 
+    id("fabric-loom") version "1.4-SNAPSHOT"
     id("maven-publish")
 }
 

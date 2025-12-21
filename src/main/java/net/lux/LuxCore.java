@@ -20,6 +20,7 @@ public class LuxCore implements ModInitializer {
         LOGGER.info("      LuxLoader: Initializing Engine    ");
         LOGGER.info("========================================");
         scanAndParseMods();
+        LuxEvents.fireStartEvent("0.1.0-alpha");
     }
 
     private void scanAndParseMods() {

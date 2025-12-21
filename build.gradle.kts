@@ -20,8 +20,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:0.15.7")
 
     implementation("org.spongepowered:mixin:0.8.5")
+    implementation("com.google.code.gson:gson:2.10.1")
 }
-
 
 tasks.withType<JavaCompile> {
     options.release.set(17)

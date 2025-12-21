@@ -8,10 +8,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin {
-    
     @Inject(at = @At("HEAD"), method = "init()V")
     private void init(CallbackInfo info) {
-        System.out.println("[Lux] Successfully injected into Title Screen");
+        net.lux.core.LuxCore.LOGGER.info("Lux has successfully injected into the Title Screen!");
     }
-
 }

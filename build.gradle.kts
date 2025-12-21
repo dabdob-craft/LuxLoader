@@ -1,6 +1,6 @@
 plugins {
     java
-    id("io.github.juuxel.loom-quiltflower") version "1.10.0"
+    id("dev.architectury.loom") version "1.3-SNAPSHOT" 
     id("maven-publish")
 }
 

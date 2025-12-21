@@ -1,6 +1,6 @@
 plugins {
     java
-    id("dev.architectury.loom") version "1.3-SNAPSHOT" 
+    id("dev.architectury.loom") version "1.3.383" 
     id("maven-publish")
 }
 

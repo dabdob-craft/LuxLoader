@@ -17,7 +17,7 @@ public class LuxCore implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("========================================");
-        LOGGER.info("      LuxLoader: Analyzing Metadata     ");
+        LOGGER.info("      LuxLoader: Initializing Engine    ");
         LOGGER.info("========================================");
         scanAndParseMods();
     }
@@ -31,12 +31,16 @@ public class LuxCore implements ModInitializer {
 
         for (File file : files) {
             try (ZipFile zipFile = new ZipFile(file)) {
-                ZipEntry entry = zipFile.getEntry("lux.mod.json");
-                if (entry != null) {
-                    try (Reader reader = new InputStreamReader(zipFile.getInputStream(entry))) {
+                ZipEntry luxEntry = zipFile.getEntry("lux.mod.json");
+                ZipEntry fabricEntry = zipFile.getEntry("fabric.mod.json");
+                ZipEntry targetEntry = (luxEntry != null) ? luxEntry : fabricEntry;
+
+                if (targetEntry != null) {
+                    try (Reader reader = new InputStreamReader(zipFile.getInputStream(targetEntry))) {
                         ModMetadata data = GSON.fromJson(reader, ModMetadata.class);
                         ModManager.addMod(data);
-                        LOGGER.info("[Lux] Loaded: {} ({}) by {}", data.name, data.version, data.author);
+                        String type = (luxEntry != null) ? "Native" : "Fabric";
+                        LOGGER.info("[Lux] {} Mod Loaded: {} ({})", type, data.name, data.version);
                     }
                 }
             } catch (Exception e) {

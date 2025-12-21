@@ -10,12 +10,12 @@ version = "0.1.0-alpha"
 repositories {
     mavenCentral()
     maven("https://maven.fabricmc.net/")
+    maven("https://repo.spongepowered.org/repository/maven-public/") 
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:1.20.1") 
-    
-    mappings(loom.officialMojangMappings()) 
+    minecraft("com.mojang:minecraft:1.20.1")
+    mappings(loom.officialMojangMappings())
 
     implementation("org.spongepowered:mixin:0.8.5")
 }

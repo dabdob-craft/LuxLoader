@@ -16,6 +16,7 @@ public class LuxCore implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ConfigManager.load();
         LOGGER.info("========================================");
         LOGGER.info("      LuxLoader: Initializing Engine    ");
         LOGGER.info("========================================");

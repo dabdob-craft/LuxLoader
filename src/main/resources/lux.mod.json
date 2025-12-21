@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "lux",
+  "version": "0.1.0-alpha",
+  "name": "Lux Loader",
+  "description": "The next generation high-performance mod loader for Minecraft.",
+  "authors": [
+    "dabdob-craft"
+  ],
+  "contact": {
+    "homepage": "https://github.com/dabdob-craft/LuxLoader",
+    "sources": "https://github.com/dabdob-craft/LuxLoader",
+    "issues": "https://github.com/dabdob-craft/LuxLoader/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/lux/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.lux.core.LuxCore"
+    ]
+  },
+  "mixins": [
+    "lux.mixins.json"
+  ],
+  "depends": {
+    "minecraft": ">=1.20.1",
+    "java": ">=17"
+  }
+}

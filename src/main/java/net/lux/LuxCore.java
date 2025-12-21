@@ -35,7 +35,7 @@ public class LuxCore implements ModInitializer {
                 if (entry != null) {
                     try (Reader reader = new InputStreamReader(zipFile.getInputStream(entry))) {
                         ModMetadata data = GSON.fromJson(reader, ModMetadata.class);
-                        ModManager.aModManager.addMod(data);
+                        ModManager.addMod(data);
                         LOGGER.info("[Lux] Loaded: {} ({}) by {}", data.name, data.version, data.author);
                     }
                 }

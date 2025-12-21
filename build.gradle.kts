@@ -17,8 +17,11 @@ dependencies {
     minecraft("com.mojang:minecraft:1.20.1")
     mappings(loom.officialMojangMappings())
 
+    modImplementation("net.fabricmc:fabric-loader:0.15.7")
+
     implementation("org.spongepowered:mixin:0.8.5")
 }
+
 
 tasks.withType<JavaCompile> {
     options.release.set(17)

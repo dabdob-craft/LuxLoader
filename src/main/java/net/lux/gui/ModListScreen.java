@@ -1,11 +1,14 @@
 package net.lux.gui;
 
 import net.lux.core.ModMetadata;
+import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import java.io.File;
 
 public class ModListScreen extends Screen {
     private final Screen parent;
@@ -32,6 +35,11 @@ public class ModListScreen extends Screen {
         this.modList.setLeftPos(10);
         this.addRenderableWidget(this.modList);
 
+        this.addRenderableWidget(Button.builder(Component.literal("Open Folder"), button -> {
+            File modsFolder = new File(Minecraft.getInstance().gameDirectory, "mods");
+            Util.getOSType().openFile(modsFolder);
+        }).bounds(10, this.height - 30, 95, 20).build());
+
         this.addRenderableWidget(Button.builder(Component.literal("Done"), button -> {
             this.minecraft.setScreen(this.parent);
         }).bounds(this.width / 2 - 100, this.height - 30, 200, 20).build());
@@ -47,10 +55,11 @@ public class ModListScreen extends Screen {
 
         if (selectedMod != null) {
             int x = this.width / 2 + 10;
-            context.drawString(this.font, selectedMod.getName(), x, 60, 0xFFFFFF, true);
-            context.drawString(this.font, "Version: " + selectedMod.getVersion(), x, 75, 0xAAAAAA, false);
-            context.drawString(this.font, "Author: " + selectedMod.getAuthor(), x, 90, 0xAAAAAA, false);
-            context.drawWordWrap(this.font, Component.literal(selectedMod.getDescription()), x, 110, this.width / 2 - 20, 0xDDDDDD);
+            context.drawCenteredString(this.font, "--- Details ---", x + (this.width / 4), 45, 0xFFAA00);
+            context.drawString(this.font, selectedMod.getName(), x, 65, 0xFFFFFF, true);
+            context.drawString(this.font, "Version: " + selectedMod.getVersion(), x, 80, 0xAAAAAA, false);
+            context.drawString(this.font, "Author: " + selectedMod.getAuthor(), x, 95, 0xAAAAAA, false);
+            context.drawWordWrap(this.font, Component.literal(selectedMod.getDescription()), x, 115, this.width / 2 - 20, 0xDDDDDD);
         }
 
         super.render(context, mouseX, mouseY, delta);

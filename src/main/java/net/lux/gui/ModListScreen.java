@@ -57,6 +57,7 @@ public class ModListScreen extends Screen {
 
         if (selectedMod != null) {
             int x = this.width / 2 + 10;
+            context.blit(selectedMod.getlcon(), x, 45, 0, 0, 48, 48, 48, 48);
             context.drawCenteredString(this.font, "--- Details ---", x + (this.width / 4), 45, 0xFFAA00);
             context.drawString(this.font, selectedMod.getName(), x, 65, 0xFFFFFF, true);
             context.drawString(this.font, "Version: " + selectedMod.getVersion(), x, 80, 0xAAAAAA, false);

@@ -44,8 +44,10 @@ public class ModListWidget extends ObjectSelectionList<ModListWidget.ModEntry> {
 
         @Override
         public void render(GuiGraphics context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            context.drawString(Minecraft.getInstance().font, metadata.getName(), x + 5, y + 5, 0xFFFFFF, true);
-            context.drawString(Minecraft.getInstance().font, "v" + metadata.getVersion(), x + 5, y + 17, 0xAAAAAA, false);
+            context.blit(metadata.getIcon(), x, y, 0, 0, 32, 32, 32, 32);
+            
+            context.drawString(Minecraft.getInstance().font, metadata.getName(), x + 35, y + 5, 0xFFFFFF, true);
+            context.drawString(Minecraft.getInstance().font, "v" + metadata.getVersion(), x + 35, y + 17, 0xAAAAAA, false);
         }
 
         @Override

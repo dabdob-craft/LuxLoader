@@ -17,7 +17,7 @@ public class ModListScreen extends Screen {
     @Override
     protected void init() {
         this.modList = new ModListWidget(this.minecraft, this.width, this.height, 40, this.height - 40);
-        this.addSelectableChild(this.modList);
+        this.addRenderableWidget(this.modList);
 
         this.addRenderableWidget(Button.builder(Component.literal("Done"), button -> {
             this.minecraft.setScreen(this.parent);
@@ -29,7 +29,6 @@ public class ModListScreen extends Screen {
         this.renderBackground(context);
         this.modList.render(context, mouseX, mouseY, delta);
         context.drawCenteredString(this.font, this.title, this.width / 2, 15, 0xFFFFFF);
-        
         super.render(context, mouseX, mouseY, delta);
     }
 }

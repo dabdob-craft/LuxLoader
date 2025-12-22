@@ -9,6 +9,8 @@ public class LuxLauncher {
         System.out.println("            Just LUX!              ");
         System.out.println("###################################");
         inst.addTransformer(new LuxTransformer());
+        
+        net.lux.core.ModManager.discoverMods();
     }
     public static void main(String[] args) {
         System.out.println("Please run this as a Java Agent via Minecraft Launcher.");

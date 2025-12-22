@@ -15,6 +15,7 @@ public class ModMetadata {
         this.author = author;
     }
 
+    public String getId() { return id; }
     public String getName() { return name; }
     public String getVersion() { return version; }
     public String getDescription() { return description; }

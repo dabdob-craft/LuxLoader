@@ -1,6 +1,7 @@
 package net.lux.mixin;
 
 import net.lux.core.ModManager;
+import net.lux.core.ConfigManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.TitleScreen;

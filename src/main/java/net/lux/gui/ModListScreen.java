@@ -3,6 +3,7 @@ package net.lux.gui;
 import net.lux.core.ModMetadata;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -10,6 +11,7 @@ public class ModListScreen extends Screen {
     private final Screen parent;
     private ModListWidget modList;
     private ModMetadata selectedMod;
+    private EditBox searchBox;
 
     public ModListScreen(Screen parent) {
         super(Component.literal("LuxLoader - Mods"));
@@ -22,7 +24,11 @@ public class ModListScreen extends Screen {
 
     @Override
     protected void init() {
-        this.modList = new ModListWidget(this, this.minecraft, this.width / 2 - 20, this.height, 40, this.height - 40);
+        this.searchBox = new EditBox(this.font, 12, 35, this.width / 2 - 24, 20, Component.literal("Search"));
+        this.searchBox.setResponder(text -> this.modList.filter(text));
+        this.addRenderableWidget(this.searchBox);
+
+        this.modList = new ModListWidget(this, this.minecraft, this.width / 2 - 20, this.height, 60, this.height - 40);
         this.modList.setLeftPos(10);
         this.addRenderableWidget(this.modList);
 
@@ -35,16 +41,23 @@ public class ModListScreen extends Screen {
     public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context);
         this.modList.render(context, mouseX, mouseY, delta);
-        context.drawCenteredString(this.font, this.title, this.width / 2, 15, 0xFFFFFF);
+        this.searchBox.render(context, mouseX, mouseY, delta);
+        
+        context.drawCenteredString(this.font, this.title, this.width / 2, 10, 0xFFFFFF);
 
         if (selectedMod != null) {
             int x = this.width / 2 + 10;
-            context.drawString(this.font, selectedMod.getName(), x, 50, 0xFFFFFF, true);
-            context.drawString(this.font, "Version: " + selectedMod.getVersion(), x, 65, 0xAAAAAA, false);
-            context.drawString(this.font, "Author: " + selectedMod.getAuthor(), x, 80, 0xAAAAAA, false);
-            context.drawWordWrap(this.font, Component.literal(selectedMod.getDescription()), x, 100, this.width / 2 - 20, 0xDDDDDD);
+            context.drawString(this.font, selectedMod.getName(), x, 60, 0xFFFFFF, true);
+            context.drawString(this.font, "Version: " + selectedMod.getVersion(), x, 75, 0xAAAAAA, false);
+            context.drawString(this.font, "Author: " + selectedMod.getAuthor(), x, 90, 0xAAAAAA, false);
+            context.drawWordWrap(this.font, Component.literal(selectedMod.getDescription()), x, 110, this.width / 2 - 20, 0xDDDDDD);
         }
 
         super.render(context, mouseX, mouseY, delta);
+    }
+
+    @Override
+    public void tick() {
+        this.searchBox.tick();
     }
 }

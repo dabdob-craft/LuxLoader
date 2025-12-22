@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.network.chat.Component;
+import java.util.Locale;
 
 public class ModListWidget extends ObjectSelectionList<ModListWidget.ModEntry> {
     private final ModListScreen parent;
@@ -13,8 +14,16 @@ public class ModListWidget extends ObjectSelectionList<ModListWidget.ModEntry> {
     public ModListWidget(ModListScreen parent, Minecraft client, int width, int height, int top, int bottom) {
         super(client, width, height, top, bottom, 36);
         this.parent = parent;
+        filter("");
+    }
+
+    public void filter(String searchTerm) {
+        this.clearEntries();
+        String search = searchTerm.toLowerCase(Locale.ROOT);
         for (ModMetadata mod : ModManager.getLoadedMods()) {
-            this.addEntry(new ModEntry(mod));
+            if (mod.getName().toLowerCase(Locale.ROOT).contains(search) || mod.getId().toLowerCase(Locale.ROOT).contains(search)) {
+                this.addEntry(new ModEntry(mod));
+            }
         }
     }
 

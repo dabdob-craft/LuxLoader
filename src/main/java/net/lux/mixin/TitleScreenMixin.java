@@ -14,11 +14,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class TitleScreenMixin {
     
     @Inject(at = @At("TAIL"), method = "render")
-private void renderLuxInfo(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-    if (ConfigManager.config.showModCount) {
-        String label = ConfigManager.config.loaderName + ": " + ModManager.getModCount() + " Mods Loaded";
-        var font = Minecraft.getInstance().font;
-        int screenHeight = ((TitleScreen)(Object)this).height;
-        context.drawString(font, label, 2, screenHeight - 10, 0xFFFFFF, true);
+    private void renderLuxInfo(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+        if (ConfigManager.config != null && ConfigManager.config.showModCount) {
+            String label = ConfigManager.config.loaderName + ": " + ModManager.getModCount() + " Mods Loaded";
+            var font = Minecraft.getInstance().font;
+            int y = ((TitleScreen)(Object)this).height - 10;
+            context.drawString(font, label, 2, y, 0xFFFFFF, true);
+        }
     }
 }

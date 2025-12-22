@@ -30,6 +30,14 @@ public class LuxClassLoader extends URLClassLoader {
             }
         }
     }
+    public void addModFile(File file) {
+        try {
+            this.addURL(file.toURI().toURL());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     protected void addURL(URL url) {

@@ -37,7 +37,8 @@ public class ModListScreen extends Screen {
 
         this.addRenderableWidget(Button.builder(Component.literal("Open Folder"), button -> {
             File modsFolder = new File(Minecraft.getInstance().gameDirectory, "mods");
-            Util.getOSType().openFile(modsFolder);
+            if (!modsFolder.exists()) modsFolder.mkdirs();
+            Util.getOperatingSystem().openFile(modsFolder);
         }).bounds(10, this.height - 30, 95, 20).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("Done"), button -> {

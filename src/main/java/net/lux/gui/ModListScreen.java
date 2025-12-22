@@ -36,10 +36,11 @@ public class ModListScreen extends Screen {
         this.addRenderableWidget(this.modList);
 
         this.addRenderableWidget(Button.builder(Component.literal("Open Folder"), button -> {
-            File modsFolder = new File(Minecraft.getInstance().gameDirectory, "mods");
+            File modsFolder = new File(this.minecraft.gameDirectory, "mods");
             if (!modsFolder.exists()) modsFolder.mkdirs();
-            Util.getOperatingSystem().openFile(modsFolder);
+            Util.getPlatform().openFile(modsFolder);
         }).bounds(10, this.height - 30, 95, 20).build());
+
 
         this.addRenderableWidget(Button.builder(Component.literal("Done"), button -> {
             this.minecraft.setScreen(this.parent);

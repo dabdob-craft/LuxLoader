@@ -4,7 +4,6 @@ import net.lux.core.*;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import net.fabricmc.api.ModInitializer;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.zip.ZipFile;

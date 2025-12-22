@@ -1,4 +1,4 @@
-package net.lux.core;
+package net.lux;
 
 import net.lux.core.*;
 import com.google.gson.Gson;

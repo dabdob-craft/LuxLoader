@@ -1,0 +1,2 @@
+open-class net/minecraft/client/MinecraftClient
+open-method net/minecraft/world/World tick ()V

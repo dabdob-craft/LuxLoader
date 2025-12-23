@@ -1,0 +1,16 @@
+dependencies {
+    implementation project(':lux-api')
+    implementation 'org.ow2.asm:asm:9.5'
+    implementation 'org.ow2.asm:asm-tree:9.5'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Premain-Class': 'net.lux.launcher.LuxLauncher',
+            'Can-Retransform-Classes': 'true'
+        )
+    }
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

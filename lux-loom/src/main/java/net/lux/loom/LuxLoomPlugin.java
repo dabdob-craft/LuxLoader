@@ -7,6 +7,16 @@ import java.io.File;
 public class LuxLoomPlugin implements Plugin<Project> {
     @Override
     public void apply(Project project) {
+        System.out.println("-----------------------------------------");
+        System.out.println("   _      _    _  __   __               ");
+        System.out.println("  | |    | |  | | \\ \\ / /               ");
+        System.out.println("  | |    | |  | |  \\ V /                ");
+        System.out.println("  | |    | |  | |   > <                 ");
+        System.out.println("  | |____| |__| |  / ^ \\                ");
+        System.out.println("  |______|\\____/  /_/ \\_\\  LOADER       ");
+        System.out.println("   Integrated & Independent System      ");
+        System.out.println("-----------------------------------------");
+
         LuxLinker.linkMinecraft(project, "1.20.1");
         LuxRunConfig.setup(project);
         

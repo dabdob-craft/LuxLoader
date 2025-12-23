@@ -1,0 +1,5 @@
+rootProject.name = 'LuxLoader'
+
+include 'lux-api'
+include 'lux-core'
+include 'lux-loom'

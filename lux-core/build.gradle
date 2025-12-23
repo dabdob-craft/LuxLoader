@@ -6,6 +6,15 @@ dependencies {
     implementation 'org.ow2.asm:asm-commons:9.5'
 }
 
+jar {
+    manifest {
+        attributes(
+            'Premain-Class': 'net.lux.core.LuxAgent',
+            'Can-Retransform-Classes': 'true'
+        )
+    }
+}
+
 tasks.named('jar') {
     dependsOn(':lux-api:jar')
 }

@@ -26,6 +26,15 @@ dependencies {
     implementation localGroovy()
 }
 
+tasks.withType(ProcessResources).configureEach {
+    //
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+tasks.named('jar') {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
 tasks.named('compileJava') {
     dependsOn(':lux-api:jar')
 }

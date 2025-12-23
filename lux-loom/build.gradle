@@ -28,7 +28,6 @@ dependencies {
 }
 
 tasks.withType(ProcessResources).configureEach {
-    //
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
@@ -38,4 +37,22 @@ tasks.named('jar') {
 
 tasks.named('compileJava') {
     dependsOn(':lux-api:jar')
+}
+
+subprojects {
+    apply plugin: 'maven-publish'
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+        repositories {
+            maven {
+                name = "LuxRepo"
+                url = layout.buildDirectory.dir("repo")
+            }
+        }
+    }
 }

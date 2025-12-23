@@ -22,11 +22,21 @@ public class LuxLoomPlugin implements Plugin<Project> {
             });
         });
 
-        project.getTasks().create("runLuxClient", task -> {
-            task.setGroup("lux");
-            task.doFirst(s -> {
-                System.out.println("Starting Minecraft with LuxLoader...");
+        project.getTasks().create("genSources", task -> {
+    task.setGroup("lux");
+    task.setDescription("Decompiles Minecraft and maps it for development.");
+    
+    task.doLast(s -> {
+        File minecraftJar = new File(project.getBuildDir(), "lux/minecraft-mapped.jar");
+        File sourcesOutput = new File(project.getProjectDir(), "src/generated/java");
+        
+        if (minecraftJar.exists()) {
+            LuxDecompiler.decompile(minecraftJar, sourcesOutput);
+        } else {
+            System.err.println("[LuxLoom] Error: Mapped Minecraft JAR not found! Run 'mapMinecraft' first.");
+                }
             });
         });
+
     }
 }

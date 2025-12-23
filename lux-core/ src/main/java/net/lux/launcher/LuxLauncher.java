@@ -11,6 +11,8 @@ public class LuxLauncher {
         System.out.println("====================================");
 
         inst.addTransformer(new LuxTransformer());
+        
+        ModManager.discoverMods();
 
     }
 }

@@ -7,7 +7,7 @@ import java.io.File;
 public class LuxLoomPlugin implements Plugin<Project> {
     @Override
     public void apply(Project project) {
-        LuxLinker.linkMinecraft(project, "1.20.1")
+        LuxLinker.linkMinecraft(project, "1.20.1");
         LuxRunConfig.setup(project);
         project.getRepositories().mavenCentral();
         project.getDependencies().add("implementation", "net.lux:lux-api:1.0.0"); 

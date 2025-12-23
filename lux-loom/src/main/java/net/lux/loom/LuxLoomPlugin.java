@@ -9,10 +9,13 @@ public class LuxLoomPlugin implements Plugin<Project> {
     public void apply(Project project) {
         LuxLinker.linkMinecraft(project, "1.20.1");
         LuxRunConfig.setup(project);
+        
         project.getRepositories().mavenCentral();
         project.getDependencies().add("implementation", "net.lux:lux-api:1.0.0"); 
+        
         System.out.println("[LuxLoom] Total System Integrated.");
-        project.getTasks().create("processAccessWidener", task -> {
+
+        project.getTasks().register("processAccessWidener", task -> {
             task.setGroup("lux");
             task.doLast(s -> {
                 File awFile = project.file("src/main/resources/lux.accesswidener");
@@ -22,29 +25,30 @@ public class LuxLoomPlugin implements Plugin<Project> {
             });
         });
 
-        project.getTasks().create("genSources", task -> {
-    task.setGroup("lux");
-    task.doLast(s -> {
-        File rawJar = new File(project.getBuildDir(), "lux/minecraft-raw.jar");
-        File mappedJar = new File(project.getBuildDir(), "lux/minecraft-mapped.jar");
-        File mappings = new File(project.getProjectDir(), "mappings/mappings.tiny");
-        File sourcesOutput = new File(project.getProjectDir(), "src/generated/java");
-        File mappingDir = new File(project.getGradle().getGradleUserHomeDir(), "caches/lux/mappings");
-        if (!mappingDir.exists()) mappingDir.mkdirs();
-        File mappingFile = new File(mappingDir, "mappings-1.20.1.tiny");
-        if (!mappingFile.exists()) {
-            MappingDownloader.download("1.20.1+build.10", mappingFile);
-        }
+        project.getTasks().register("genSources", task -> {
+            task.setGroup("lux");
+            task.doLast(s -> {
+                File luxCache = new File(project.getGradle().getGradleUserHomeDir(), "caches/lux");
+                File mappingFile = new File(luxCache, "mappings/mappings-1.20.1.tiny");
+    
+                File buildDir = project.getLayout().getBuildDirectory().getAsFile().get();
+                File rawJar = new File(buildDir, "lux/minecraft-raw.jar");
+                File mappedJar = new File(buildDir, "lux/minecraft-mapped.jar");
+                File sourcesOutput = new File(project.getProjectDir(), "src/generated/java");
 
-        MinecraftDownloader.downloadMinecraft(rawJar);
+                if (!mappingFile.exists()) {
+                    mappingFile.getParentFile().mkdirs();
+                    MappingDownloader.download("1.20.1+build.10", mappingFile);
+                }
 
-        LuxRemapper.remap(rawJar, mappedJar, mappings);
+                MinecraftDownloader.downloadMinecraft(rawJar);
 
-        LuxDecompiler.decompile(mappedJar, sourcesOutput);
-        
-        System.out.println(">>> LuxLoader: Sources are ready for development!");
+                LuxRemapper.remap(rawJar, mappedJar, mappingFile);
+
+                LuxDecompiler.decompile(mappedJar, sourcesOutput);
+                
+                System.out.println(">>> [LuxLoader] Sources are ready! Check: " + sourcesOutput.getPath());
             });
         });
-        
     }
 }

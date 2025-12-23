@@ -1,5 +1,6 @@
 package net.lux.loom;
 
+import net.fabricmc.tinyremapper.OutputConsumerPath;
 import net.fabricmc.tinyremapper.TinyRemapper;
 import net.fabricmc.tinyremapper.TinyUtils;
 import net.fabricmc.tinyremapper.IMappingProvider;
@@ -8,21 +9,26 @@ import java.nio.file.Path;
 
 public class LuxRemapper {
     public static void remap(File inputJar, File outputJar, File mappingsFile) {
-        System.out.println("[LuxRemapper] Mapping Minecraft to human-readable names...");
+        System.out.println("[LuxRemapper] Starting Remap: " + inputJar.getName() + " -> " + outputJar.getName());
 
-        try {
+        TinyRemapper remapper = null;
+        try (OutputConsumerPath outputConsumer = new OutputConsumerPath.Builder(outputJar.toPath()).build()) {
+            
             IMappingProvider provider = TinyUtils.createTinyMappingProvider(mappingsFile.toPath(), "official", "named");
 
-            TinyRemapper remapper = TinyRemapper.newRemapper()
+            remapper = TinyRemapper.newRemapper()
                     .withMappings(provider)
                     .build();
 
             remapper.readInputs(inputJar.toPath());
+       
+            remapper.apply(outputConsumer);
             
-            System.out.println("[LuxRemapper] Mapping finished!");
-            remapper.finish();
+            System.out.println("[LuxRemapper] Remapping completed successfully.");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("[LuxRemapper] Error during remapping: " + e.getMessage());
+        } finally {
+            if (remapper != null) remapper.finish();
         }
     }
 }

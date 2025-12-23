@@ -24,19 +24,19 @@ public class LuxLoomPlugin implements Plugin<Project> {
 
         project.getTasks().create("genSources", task -> {
     task.setGroup("lux");
-    task.setDescription("Decompiles Minecraft and maps it for development.");
-    
     task.doLast(s -> {
-        File minecraftJar = new File(project.getBuildDir(), "lux/minecraft-mapped.jar");
+        File rawJar = new File(project.getBuildDir(), "lux/minecraft-raw.jar");
+        File mappedJar = new File(project.getBuildDir(), "lux/minecraft-mapped.jar");
+        File mappings = new File(project.getProjectDir(), "mappings/mappings.tiny");
         File sourcesOutput = new File(project.getProjectDir(), "src/generated/java");
+
+        LuxRemapper.remap(rawJar, mappedJar, mappings);
+
+        LuxDecompiler.decompile(mappedJar, sourcesOutput);
         
-        if (minecraftJar.exists()) {
-            LuxDecompiler.decompile(minecraftJar, sourcesOutput);
-        } else {
-            System.err.println("[LuxLoom] Error: Mapped Minecraft JAR not found! Run 'mapMinecraft' first.");
-                }
+        System.out.println(">>> LuxLoader: Sources are ready for development!");
             });
         });
-
+        
     }
 }

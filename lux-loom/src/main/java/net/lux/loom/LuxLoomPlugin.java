@@ -15,12 +15,19 @@ public class LuxLoomPlugin implements Plugin<Project> {
         
         System.out.println("[LuxLoom] Total System Integrated.");
 
-        project.getTasks().register("processAccessWidener", task -> {
+        project.getTasks().register("processLuxAccess", task -> {
             task.setGroup("lux");
             task.doLast(s -> {
-                File awFile = project.file("src/main/resources/lux.accesswidener");
-                if (awFile.exists()) {
-                    System.out.println("[LuxLoom] Found Access Widener file, applying transformations...");
+                File accessFile = project.file("src/main/resources/lux.access");
+        
+                if (accessFile.exists()) {
+                    System.out.println("[LuxLoom] Found Lux Access file! Starting independent transformation...");
+            
+                    File jarToModify = new File(project.getLayout().getBuildDirectory().getAsFile().get(), "lux/minecraft-mapped.jar");
+            
+                    LuxAccessProcessor.apply(jarToModify, accessFile);
+                } else {
+                    System.out.println("[LuxLoom] No lux.access file found. Skipping access widening.");
                 }
             });
         });

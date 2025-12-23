@@ -2,6 +2,7 @@ package net.lux.loom;
 
 import org.jetbrains.java.decompiler.main.extern.IFernflowerPreferences;
 import org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler;
+import org.jetbrains.java.decompiler.main.decompiler.PrintStreamLogger;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,10 @@ public class LuxDecompiler {
         options.put(IFernflowerPreferences.DECOMPILE_GENERIC_SIGNATURES, "1");
         options.put(IFernflowerPreferences.INDENT_STRING, "    ");
 
-        ConsoleDecompiler decompiler = new ConsoleDecompiler(outputDir, options);
+        PrintStreamLogger logger = new PrintStreamLogger(System.out);
+        
+        ConsoleDecompiler decompiler = new ConsoleDecompiler(outputDir, options, logger);
+        
         decompiler.addSource(inputJar);
         decompiler.decompileContext();
 

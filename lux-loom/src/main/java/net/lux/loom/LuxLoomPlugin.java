@@ -29,6 +29,12 @@ public class LuxLoomPlugin implements Plugin<Project> {
         File mappedJar = new File(project.getBuildDir(), "lux/minecraft-mapped.jar");
         File mappings = new File(project.getProjectDir(), "mappings/mappings.tiny");
         File sourcesOutput = new File(project.getProjectDir(), "src/generated/java");
+        File mappingDir = new File(project.getGradle().getGradleUserHomeDir(), "caches/lux/mappings");
+        if (!mappingDir.exists()) mappingDir.mkdirs();
+        File mappingFile = new File(mappingDir, "mappings-1.20.1.tiny");
+        if (!mappingFile.exists()) {
+            MappingDownloader.download("1.20.1+build.10", mappingFile);
+        }
 
         LuxRemapper.remap(rawJar, mappedJar, mappings);
 

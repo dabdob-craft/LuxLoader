@@ -36,6 +36,8 @@ public class LuxLoomPlugin implements Plugin<Project> {
             MappingDownloader.download("1.20.1+build.10", mappingFile);
         }
 
+        MinecraftDownloader.downloadMinecraft(rawJar);
+
         LuxRemapper.remap(rawJar, mappedJar, mappings);
 
         LuxDecompiler.decompile(mappedJar, sourcesOutput);

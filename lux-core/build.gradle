@@ -9,21 +9,24 @@ dependencies {
     implementation 'org.ow2.asm:asm:9.5'
     implementation 'org.ow2.asm:asm-tree:9.5'
     implementation 'org.ow2.asm:asm-commons:9.5'
+    
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 jar {
     manifest {
         attributes(
             'Premain-Class': 'net.lux.core.LuxAgent',
-            'Can-Retransform-Classes': 'true'
+            'Can-Retransform-Classes': 'true',
+            'Launcher-Agent-Class': 'net.lux.core.LuxAgent' 
         )
     }
 }
 
-tasks.named('jar') {
-    dependsOn(':lux-api:jar')
-}
-
 shadowJar {
     archiveClassifier.set('all')
+}
+
+tasks.named('shadowJar') {
+    dependsOn(':lux-api:jar')
 }

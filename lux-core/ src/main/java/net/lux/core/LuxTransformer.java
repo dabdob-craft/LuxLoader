@@ -4,7 +4,6 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.*;
 import org.objectweb.asm.Opcodes;
-
 import java.lang.instrument.ClassFileTransformer;
 import java.security.ProtectionDomain;
 
@@ -13,9 +12,7 @@ public class LuxTransformer implements ClassFileTransformer {
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
                             ProtectionDomain protectionDomain, byte[] classfileBuffer) {
         
-        if (className.equals("net/minecraft/client/MinecraftClient")) {
-            System.out.println("[Lux-Injection] Injecting Hook into MinecraftClient#tick");
-            
+        if (className != null && className.equals("net/minecraft/client/MinecraftClient")) {
             ClassReader reader = new ClassReader(classfileBuffer);
             ClassNode node = new ClassNode();
             reader.accept(node, 0);
@@ -26,8 +23,14 @@ public class LuxTransformer implements ClassFileTransformer {
                     insns.add(new FieldInsnNode(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;"));
                     insns.add(new LdcInsnNode(">>> LuxLoader: Game is starting with custom injection! <<<"));
                     insns.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false));
-                    
                     method.instructions.insert(insns);
+                }
+
+                if (method.name.equals("tick") || method.name.equals("method_1574")) {
+                    InsnList tickInsns = new InsnList();
+                    tickInsns.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "net/lux/core/LuxLoader", "onTick", "()V", false));
+                    method.instructions.insert(tickInsns);
+                    System.out.println("[Lux-Injection] Successfully hooked into Minecraft tick!");
                 }
             }
 

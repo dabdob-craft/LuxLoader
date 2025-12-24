@@ -1,3 +1,8 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
 dependencies {
     implementation project(':lux-api')
     
@@ -17,4 +22,8 @@ jar {
 
 tasks.named('jar') {
     dependsOn(':lux-api:jar')
+}
+
+shadowJar {
+    archiveClassifier.set('all')
 }

@@ -14,7 +14,7 @@ public class LuxTransformer implements ClassFileTransformer {
                             ProtectionDomain protectionDomain, byte[] classfileBuffer) {
         
         if (className.equals("net/minecraft/client/MinecraftClient")) {
-            System.out.println("[LuxCore] Patching MinecraftClient...");
+            System.out.println("[Lux-Injection] Injecting Hook into MinecraftClient#tick");
             
             ClassReader reader = new ClassReader(classfileBuffer);
             ClassNode node = new ClassNode();
